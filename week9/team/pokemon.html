@@ -58,7 +58,8 @@ function solution3(data){
 }
 
 function solution4(data){
-    return 'TODO'
+    var attack = _.sum(_.pluck(data, 'Attack')) / data.length
+    return _.pluck(data, 'Name')
 }
 
 function solution5(data){
