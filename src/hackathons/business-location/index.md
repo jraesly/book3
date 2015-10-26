@@ -60,30 +60,64 @@ Our team chose to analyze candidate locations for (fill in the business type).
 
 The team members who contributed to this hackathon are:
 
-- (Name)
-- (Name)
-- (Name)
-- (Name)
-- (Name)
-- (Name)
+* [William Farmer](http://github.com/willzfarmer)
+* [Kevin Gifford](http://github.com/kevinkgifford)
+* [Parker Illig](http://github.com/pail4944)
+* [Robert Kendl](http://github.com/DomoYeti)
+* [Andrew Krodinger](http://github.com/drewdinger)
+* [John Raesly](http://github.com/jraesly)
+
 
 ### 20 Questions
 
 Our team came up with the following relevant questions:
 
-1. Does the location have ..... ? contributed by (Name)
+1. Are there any elementary schools within 2 km radius?? contributed by ([Parker Illig](http://github.com/pail4944))
 
   (one sentence justification why this question is important)
 
-1. Does the location have ..... ? contributed by (Name)
+2. Are there any preschools within a 2 km radius?? contributed by ([Parker Illig](http://github.com/pail4944))
 
-  (one sentence justification why this question is important)
+3. Are there any zoo's in a 5 km radius?? contributed by ([Parker Illig](http://github.com/pail4944))
 
-1. Does the location have ..... ? contributed by (Name)
+4. Are there any Adult entertainment stores nearby?? contributed by ([Parker Illig](http://github.com/pail4944))
 
-  (one sentence justification why this question is important)
+5. Is there a Starbucks within 2 km?? contributed by ([Kevin Gifford](http://github.com/kevinkgifford))
 
-(add more until you hit 20)
+6. Is there a doctors office within 2 km?? contributed by ([Kevin Gifford](http://github.com/kevinkgifford))
+
+7. Is there a hospital within 5 km?? contributed by ([Kevin Gifford](http://github.com/kevinkgifford))
+
+8. Is there a dentist office within 5 km?? contributed by ([Kevin Gifford](http://github.com/kevinkgifford))
+
+9. Are their any dog walker's within 5 km?? contributed by ([Kevin Gifford](http://github.com/kevinkgifford))
+
+10. Are there any other daycare's nearby?? contributed by ([William Farmer](http://github.com/willzfarmer))
+
+11. Are there any diners nearby? (indicator of bad neighborhood?)? contributed by ([William Farmer](http://github.com/willzfarmer))
+
+12. Are there any tattoo parlors nearby? (as above)? contributed by ([William Farmer](http://github.com/willzfarmer))
+
+13. Are there any banks nearby? contributed by ([William Farmer](http://github.com/willzfarmer))
+
+14. Any dive bars nearby.? contributed by ([William Farmer](http://github.com/willzfarmer))
+
+15. Is there a rehabilitation center nearby?? contributed by ([John Raesly](http://github.com/jraesly))
+If there is a rehab nearby it would suggest that this place has a lot of problems nearby.
+
+16. Are there health stores nearby?? contributed by ([John Raesly](http://github.com/jraesly))
+It might suggest that it is in a wealthy area.
+
+17. Is there children's clothing nearby?? contributed by ([John Raesly](http://github.com/jraesly))
+
+Again it might suggest that it is in a wealthy area, but also a safe area.
+
+18. Are there any museums nearby?? contributed by ([Robert Kendl](http://github.com/DomoYeti))
+
+19. Are there any cannabis clinics nearby?? contributed by ([Robert Kendl](http://github.com/DomoYeti))
+
+20. Are there any urgent care facilities nearby?? contributed by ([Robert Kendl](http://github.com/DomoYeti))
+
 
 ### Conclusion
 
