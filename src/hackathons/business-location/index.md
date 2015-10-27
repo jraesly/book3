@@ -121,6 +121,6 @@ Again it might suggest that it is in a wealthy area, but also a safe area.
 
 ### Conclusion
 
-Our team collectively has implemented (N) scoring functions. Based on
-the scores, our team recommends location (1, 2, 3, 4, 5, or 6 from west to east),
-because it receives (m) out of (N) possible scores.
+Our team collectively has implemented 10 scoring functions. Based on
+the scores, our team recommends location 1, 2, 3 west to east
+because it receives 7 out of 10 possible scores.
