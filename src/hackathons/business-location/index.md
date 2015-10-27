@@ -102,6 +102,7 @@ Our team came up with the following relevant questions:
 
 14. Any dive bars nearby.? contributed by ([William Farmer](http://github.com/willzfarmer))
 
+
 15. Is there a rehabilitation center nearby?? contributed by ([John Raesly](http://github.com/jraesly))
 If there is a rehab nearby it would suggest that this place has a lot of problems nearby.
 
