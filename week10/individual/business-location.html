@@ -12,7 +12,7 @@
 
 <div class="container">
 
-    <h1>Where should we build X?</h1>
+    <h1>Where should we build a new Chinese restaurant?</h1>
 
     <section id="candidates" class="question">
         <h4>Where are the candidate locations?</h4>
@@ -52,29 +52,58 @@ function getCandidateLocations(){
 // Scoring Functions
 //
 
-function has_some_feature_1(loc){
-  // TODO
-  return true
+function has_no_ethnic_food_within_one_mile(loc) {
+    var ethnic = _.filter(items, function(d) {
+        return _.includes(d.categories, 'Ethnic Food')
+    })
+    var nearbyethnic = _.filter(ethnic, function(d) {
+        var loc2 = _.pick(d, ['latitude', 'longitude'])
+        var dis = geolib.getDistance(loc, loc2)
+        return geolib.convertUnit('mi', dis) < 1
+    })
+    return nearbyethnic.length == 0
 }
 
-function has_some_feature_2(loc){
-  // TODO
-  return false
+function has_no_chinese_nearby(loc){
+  return _.filter(nearbyBusinesses, function(d) {
+    return _.includes(d.categories.join(', '), "Chinese") && d.open
+  }).length == 0
 }
 
-function has_some_feature_3(loc){
-  // TODO
-  return true
+function has_no_adult_entertainment_within_one_mile(loc) {
+    var adult = _.filter(items, function(d) {
+        return _.includes(d.categories, 'Adult Entertainment')
+    })
+    var nearbyadult = _.filter(adult, function(d) {
+        var loc2 = _.pick(d, ['latitude', 'longitude'])
+        var dis = geolib.getDistance(loc, loc2)
+        return geolib.convertUnit('mi', dis) < 1
+    })
+    return nearbyadult.length == 0
 }
 
-function has_some_feature_4(loc){
-  // TODO
-  return false
+function has_no_mcdonalds_within_one_mile(loc) {
+    var nearbyBusinesses = _.filter(items, function(item){
+        var loc2  = _.pick(item, ['latitude', 'longitude'])
+        var d = geolib.getDistance(loc, loc2)
+        return geolib.convertUnit('mi', d) < 1
+    })
+    var hasAtLeastOneMcDonald = _.some(nearbyBusinesses, function (business){
+        return business.name.match(/McDonald/)
+    })
+    return hasAtLeastOneMcDonald == 0
 }
 
-function has_some_feature_5(loc){
-  // TODO
-  return false
+function has_no_fast_food_within_2_miles(loc) {
+    var fast = _.filter(items, function(d) {
+        return _.includes(d.categories, 'Fast Food')
+    })
+    var nearbyfast = _.filter(fast, function(d) {
+        var loc2 = _.pick(d, ['latitude', 'longitude'])
+        var dis = geolib.getDistance(loc, loc2)
+        return geolib.convertUnit('mi', dis) < 2
+    })
+    return nearbyfast.length == 0
 }
 
 //
