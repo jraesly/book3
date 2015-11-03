@@ -60,7 +60,7 @@
   <script>
 
 // TODO: replace this team id with your team name
-var TEAM_ID = 'team0' // e.g., team1, team2, team3, team4, or team5
+var TEAM_ID = 'team2' // e.g., team1, team2, team3, team4, or team5
 
 // create a firebase reference rooted at 'https://big-data-hci-hackathon.firebaseio.com/'
 var firebase = new Firebase('https://big-data-hci-hackathon.firebaseio.com/')
@@ -126,7 +126,7 @@ function has_observed_five_tweets(tweets){
 function has_observed_two_tweets_in_a_row_about_the_crash(tweets){
   // TODO: WARMUP - implement the correct logic to detect two tweets in a row
   // mentioning the crash
-  if (Math.random() > 0.9){
+  if (tweets.length % 2 == 0 && _.includes(tweets.text, "crash") {
     emit_event('has observed two tweets about the crash in the row')
   }
 }
