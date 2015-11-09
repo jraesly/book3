@@ -38,7 +38,7 @@
     <div class="parallax">
       <img src="cloud.jpg">
       <h1 id="title">What is my online activity?
-        <div class="authors">by Name</div>
+        <div class="authors">John Raesly</div>
       </h1>
     </div>
   </div>
@@ -57,7 +57,7 @@
   <script>
 
 // TODO: replace the FIREBAW_URL with your own
-var PERSONAL_FIREBASE_URL = 'https://doubleshow-bigdata-hci.firebaseio.com/'
+var PERSONAL_FIREBASE_URL = 'https://jraesly-bigdata-hci.firebaseio.com/'
 
 // add the personal firebase url to the class's firebase
 
@@ -88,64 +88,107 @@ function analyze(events){
 
   ask(when_did_i_start_collecting, events)
   ask(how_many_emails_have_i_received_since, events)
-  ask(question1, events)
-  ask(question2, events)
-  ask(question3, events)
-  ask(question4, events)
-  ask(question5, events)
-  ask(question6, events)
-  ask(question7, events)
-  ask(question8, events)
-  ask(question9, events)
-  ask(question10, events)
+  ask(how_many_emails_from_GeoNet, events)
+  ask(how_many_emails_from_lee_raesly, events)
+  ask(when_is_my_most_recent_email, events)
+  ask(how_many_emails_have_i_received_since_sunday), events)
+  ask(how many emails_from_zapier, events)
+  ask(how_many_emails_from_stacksocial, events)
+  ask(how_many_emails_from_amazon, events)
+  ask(how_many_emails_from_CSCI_4830, events)
+  ask(how_many_emails_from_facebook, events)
+  ask(how_many_emails_from_slack, events)
 }
 
+var count = 0
+
 function when_did_i_start_collecting(events){
-  return 'I started collecting from [TODO: earliest timestamp].'
+  return 'I started collecting from ' +_.values(events.gmail)[0].date
 }
 
 function how_many_emails_have_i_received_since(events){
-  return 'I received ' + _.values(events.gmail).length + ' emails.'
+  return 'I have received ' + _.values(events.gmail).length + ' emails.'
 }
 
-function question1(events){
-  return 'I ...'
+function how_many_emails_from_GeoNet(events){
+  var geonet = _.filter(array, function(d) {
+    return ( _.includes(d.email_sender, 'GeoNet'))}).length
+
+  var count += geonet
+  return 'I received ' + geonet + ' emails from GeoNet'
+
 }
 
-function question2(events){
-  return 'I ...'
+function how_many_emails_from_lee_raesly(events){
+  var lraesly = _.filter(array, function(d) {
+    return ( _.includes(d.email_sender, 'lraesly'))}).length
+
+  var count += lraesly
+  return 'I received ' + lraesly + ' emails from Lee Raesly'
+
 }
 
-function question3(events){
-  return 'I ...'
+function when_is_my_most_recent_email(events){
+  var index = (_.values(events.gmail.date).length)-1
+  return 'My last email was recieved ' + _.values(events.gmail.date)[index]['date']
 }
 
-function question4(events){
-  return 'I ...'
+function how_many_emails_have_i_received_since_sunday(events){
+  var length =  _.values(events.gmail).length
+  _.forEach(_.values(events.gmail),function(x){
+    if(_.contains(length['date'].split(", ")[0], 'Sun')){
+      count = count+1
+    }
+  })
+  return "I received "+count+" on Saturday"
 }
 
-function question5(events){
-  return 'I ...'
+function how many emails_from_zapier(events){
+  var zapier = _.filter(array, function(d) {
+    return ( _.includes(d.email_sender, 'zapier'))}).length
+
+  var count += zapier
+  return 'I received ' + zapier + ' emails from Zapier'
 }
 
-function question6(events){
-  return 'I ...'
+function how_many_emails_from_stacksocial(events){
+  var stackscoial = _.filter(array, function(d) {
+    return ( _.includes(d.email_sender, 'stackscoial'))}).length
+
+  var count += stackscoial
+  return 'I received ' + stackscoial + ' emails from Stack Social'
 }
 
-function question7(events){
-  return 'I ...'
+function how_many_emails_from_amazon(events){
+  var amazon = _.filter(array, function(d) {
+    return ( _.includes(d.email_sender, 'amazon'))}).length
+
+  var count += amazon
+  return 'I received ' + amazon + ' emails from Amazon'
 }
 
-function question8(events){
-  return 'I ...'
+function how_many_emails_from_CSCI_4830(events){
+  var 4830 = _.filter(array, function(d) {
+    return ( _.includes(d.email_sender, 'bigdata'))}).length
+
+  var count += 4830
+  return 'I received ' + 4830 + ' emails from bigdata-hci'
 }
 
-function question9(events){
-  return 'I ...'
+function how_many_emails_from_facebook(events){
+  var facebook = _.filter(array, function(d) {
+    return ( _.includes(d.email_sender, 'facebook'))}).length
+
+  var count += facebook
+  return 'I received ' + facebook + ' emails from Facebook'
 }
 
-function question10(events){
-  return 'I ...'
+function how_many_emails_from_slack(events){
+  var slack = _.filter(array, function(d) {
+    return ( _.includes(d.email_sender, 'slack'))}).length
+
+  var count += slack
+  return 'I received ' + slack + ' emails from Slack'
 }
 
 // initialize the parallax effect

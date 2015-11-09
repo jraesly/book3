@@ -38,7 +38,7 @@
     <div class="parallax">
       <img src="cloud.jpg">
       <h1 id="title">What is everyone in the class's activity?
-        <div class="authors">by Name</div>
+        <div class="authors">John Raesly</div>
       </h1>
     </div>
   </div>
@@ -121,16 +121,16 @@ function analyze(events){
 
   ask(how_many_individuals_analyzed_so_far, events)
   ask(whose_data_is_available, events)
-  ask(question1, events)
-  ask(question2, events)
-  ask(question3, events)
-  ask(question4, events)
-  ask(question5, events)
-  ask(question6, events)
-  ask(question7, events)
-  ask(question8, events)
-  ask(question9, events)
-  ask(question10, events)
+  ask(who_uses_only_gmail, events)
+  ask(who_uses_youtube, events)
+  ask(what_is_the_max_events_per_user, events)
+  ask(What_is_the_min_events_per_user, events)
+  ask(who_uses_github, events)
+  ask(how_many_individuals_with_no_activity, events)
+  ask(who_uses_facebook, events)
+  ask(who_uses_twitter, events)
+  ask(who_has_the_most_emails, events)
+  ask(how_many_total_events, events)
 }
 
 function how_many_individuals_analyzed_so_far(events){
@@ -141,45 +141,79 @@ function whose_data_is_available(events){
   return _.keys(events).join(' , ')
 }
 
-function question1(events){
-  return '...'
+function who_uses_only_gmail(events){
+  return _.filter(events, function(user){
+    return _.contains(_.keys(user), 'gmail')
+  }).length
 }
 
-function question2(events){
-  return '...'
+function who_uses_youtube(events){
+  return _.filter(events, function(user){
+    return _.contains(_.keys(user), 'youtube')
+  }).length
 }
 
-function question3(events){
-  return '...'
+function what_is_the_max_events_per_user(events){
+  return _.chain(userAppCounts(events))
+    .map(function(apps) { return _.sum(_.values(apps))})
+    .max().value().toFixed()
 }
 
-function question4(events){
-  return '...'
+function What_is_the_min_events_per_user(events){
+  return _.chain(userAppCounts(events))
+    .map(function(apps) { return _.sum(_.values(apps))})
+    .min().value().toFixed()
 }
 
-function question5(events){
-  return '...'
+function who_uses_github(events){
+  return _.filter(events, function(user){
+    return _.contains(_.keys(user), 'github')
+  }).length
 }
 
-function question6(events){
-  return '...'
+function how_many_individuals_with_no_events(events){
+  var events = _.values(_.mapValues(events, function(user){
+    return _.size(_.keys(user))
+  }))
+  return _.takeWhile(activities, function(n){
+    return n == 0
+  }).length
 }
 
-function question7(events){
-  return '...'
+function who_uses_facebook(events){
+  return _.filter(events, function(user){
+    return _.contains(_.keys(user), 'facebook')
+  }).length
 }
 
-function question8(events){
-  return '...'
+function who_uses_twitter(events){
+  return _.filter(events, function(user){
+    return _.contains(_.keys(user), 'twitter')
+  }).length
 }
 
-function question9(events){
-  return '...'
+function who_has_the_most_emails(events){
+  var gmail = _.invert(_.mapValues(events, function(user){
+    if (_.contains(_.keys(user), 'gmails')) return _.size(user.gmail)
+    else return 0
+  }))
+
+  var emails = _.max(_.keys(gmail))
+
+  return gmail[emails]
 }
 
-function question10(events){
-  return '...'
-}
+function how_many_total_events(events){
+  var events = _.values(events)
+  var feeds = _.map(events, function(d) {
+    return _.keys(d)
+  })
+  var feeds1 = _.unique(_.flatten(feeds))
+  var feeds2 = _.filter(feeds1, function(d) {
+    return !(_.startsWith(d, '-K2'))
+  })
+  return feeds2.length
+  }
 
 
 // initialize the parallax effect
