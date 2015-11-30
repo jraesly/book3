@@ -1,6 +1,6 @@
 <html>
 <head>
-  <title>Google Book Words</title>
+  <title>Sonar Data</title>
     <style>
         section{
           padding: 10px;
@@ -41,7 +41,7 @@
     <div class="parallax">
       <img src="sonar.jpg">
       <h1 id="title">What is in our ocean?
-        <div class="authors">by [FILL YOUR NAME]</div>
+        <div class="authors">by John Raesly</div>
       </h1>
     </div>
   </div>
@@ -107,6 +107,7 @@ function csv2jsonArray(rawdata){
 
 var items
 $.ajax({url: 'https://big-data-hci-hackathon.firebaseapp.com/data/sonar/D20140726-T095443.csv'})
+// $.ajax({url: '../D20140726-T095443.csv'})
  .done(function(rawdata){
 
   items = csv2jsonArray(rawdata)
@@ -122,6 +123,7 @@ $.ajax({url: 'https://big-data-hci-hackathon.firebaseapp.com/data/sonar/D2014072
 
 function ask(text, func){
 
+  // create an html element to display the answer
   var id = func.name
   var answerHtml = '<div class="collection-item" id="' + id + '">' +
       '<h4>' + text + '</h4>' +
@@ -131,8 +133,10 @@ function ask(text, func){
     '</div>'
   var answerElement = $(answerHtml)
 
+  // append to #questions
   $('#questions').append(answerElement)
 
+  // note: by using call(), we can bind the 'this' pointer to 'answerElement'
   var text = func.call(answerElement, items)
 
   answerElement.find('.text').text(text)
@@ -142,7 +146,8 @@ function heading(text){
   $('#questions').append('<h2>' + text +  '</h2>')
 }
 
-
+// create a map and attach it to the HTML element 'el'
+// return the map object
 function createMap(el, pos, zoom){
   var map = L.map(el).setView(pos, zoom)
   L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
@@ -157,6 +162,7 @@ function createMap(el, pos, zoom){
   return map
 }
 
+// initialize the parallax effect
 $(document).ready(function(){
     $('.parallax').parallax()
 })
