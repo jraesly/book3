@@ -74,24 +74,58 @@ function example3(){
 }
 
 function func1(){
-  return '...'
+  var uniqueSamples = []
+  var samples = _.map(items, function(d) {
+    return _.map(d['Samples'], function(f) {
+      if (f > 0) { uniqueSamples[uniqueSamples.length] = f }
+    })
+  })
+
+  var numberUniqueSamples = 'There are ' + _.uniq(uniqueSamples).length +' and they are ' + _.uniq(uniqueSamples).join(', ')
+
+  return numberUniqueSamples
+
 }
+
 
 function func2(){
   return '...'
 }
 
 function func3(){
-  return '...'
+  var time = _.filter(items, function(d) {
+    return d['Ping_time'] == "09:57:18"
+  })
+  var sample7 = _.filter(time[0].Samples, function(d) {
+    return d == "7.000000"
+  })
+  return sample7.length
 }
 
 function func4(){
-  return '...'
+  var countArr = []
+  var sampleItems = _.map(items, function(d) {
+    count = 0
+    var sample3 = _.map(d['Samples'], function(f) {
+      if (f == "3.000000") { count++ }
+    })
+    countArr[countArr.length] = count
+  })
+  var max = _.max(countArr)
+  var index = _.findIndex(countArr, function(d) {
+    return d == max
+  })
+  var string = 'Measurement #314 at Ping_time: ' + items[index].Ping_time + ' has ' + max + ' samples with the value 3.000000'
+
+  return string
 }
 
 function func5(){
-  return '...'
+  return _.filter(items, function(d){
+    return _.max(d['Samples']) <= 0
+  }).length
 }
+
 
 function func6(){
   return '...'
@@ -102,37 +136,178 @@ function func7(){
   // this sample code shows how to display a map and put a marker to visualize
   // the location of the first item (i.e., measurement data)
   // you need to adapt this code to answer the question
-
+  var nyc = ['40.7127', '-74.0059']
+  var coordnyc = {'latitude': nyc[0], 'longitude': nyc[1]}
+  var distances = []
+  _.forEach(items, function(d){
+    var coord = {'latitude': d.Latitude, 'longitude': d.Longitude}
+    var dist = geolib.getDistance(coordnyc, coord)
+    distances.push(dist)
+  })
+  var max = _.max(distances)
   var first = items[0]
   var pos = [first.Latitude, first.Longitude]
   var el = $(this).find('.viz')[0]    // lookup the element that will hold the map
   $(el).height(500) // set the map to the desired height
   var map = createMap(el, pos, 5)
-
-  var circle = L.circle(pos, 500, {
-      color: 'red',
-      fillColor: '#f03',
-      fillOpacity: 0.5
-  }).addTo(map);
-  return '...'
+  var time = ''
+  _.forEach(items, function(d){
+    var coord1 = {'latitude': d.Latitude, 'longitude': d.Longitude}
+    if(geolib.getDistance(coordnyc, coord1) == max){
+      time = d.Ping_time
+      var coord2 = [d.Latitude, d.Longitude]
+      var circle = L.circle(coord2, 500, {
+          color: 'red',
+          fillColor: '#f03',
+          fillOpacity: 0.5
+      }).addTo(map)
+    }
+  })
+  return time + " with a distance of " + max
 }
 
 function func8(){
-  return '...'
+  var first = items[200]
+  var pos = [first.Latitude, first.Longitude]
+  var el = $(this).find('.viz')[0]    // lookup the element that will hold the map
+  $(el).height(500) // set the map to the desired height
+  var map = createMap(el, pos, 9)
+  var pairs= _.pairs(items)
+  for(var i =0; i < items.length-1; i++){
+    var coord1 = [pairs[i][1].Latitude, pairs[i][1].Longitude]
+    var circle = L.circle(coord1, 2, {
+        color: 'green',
+        fillColor: '#f03',
+        fillOpacity: 0.5
+    }).addTo(map);
+  }
 }
 
 function func9(){
-  return '...'
-}
+
+    var location = items[0]
+    var pos = [location.Latitude, location.Longitude]
+    var el = $(this).find('.viz')[0]    // lookup the element that will hold the map
+    $(el).height(500) // set the map to the desired height
+    var map = createMap(el, pos, 7)
+    arr = []
+    var samples = _.map(items, function(d) {
+      var filterData = _.map(d['Samples'], function(f) {
+        if (f > 0) { arr[arr.length] = f }
+      })
+    })
+    var groups = _.groupBy(arr)
+    var samplevalue = _.mapValues(groups, function(d) {
+      return d.length
+    })
+    var pairs = _.pairs(samplevalue)
+    var sortedData = _.sortBy(pairs, function(d) {
+      return -d[1]
+    })
+    var most = sortedData[0][0]
+
+    // Process to detect which locations had samples with the most common sample value and map
+    var plotPoints = _.map(items, function(d) {
+      var filterData = _.map(d['Samples'], function(f) {
+        if (parseFloat(f) == most) {
+          var latlng = [parseFloat(d.Latitude), parseFloat(d.Longitude)]
+          L.circle(latlng, 50, {color: 'green'
+          , fillColor: '#f03'
+          ,  fillOpacity: 0.5
+          }).addTo(map)
+        }
+      })
+    })
+
+    return 'Most common sample value measured below'
+  }
 
 function func10(){
-  return '...'
+  var location = items[0]
+  var pos = [location.Latitude, location.Longitude]
+  var el = $(this).find('.viz')[0]    // lookup the element that will hold the map
+  $(el).height(500) // set the map to the desired height
+  var map = createMap(el, pos, 7)
+
+  maxCount = 0
+  var valid = _.map(items, function(d) {
+    var valid2 = _.filter(d.Samples, function(f) {
+      return f > 0
+    }).length
+    if (valid2 > maxCount) { maxCount = valid2 }
+    return [ d.Latitude, d.Longitude, valid2 ]
+  })
+  var plotDensity = _.map(valid, function(d) {
+    var latlng = [parseFloat(d[0]), parseFloat(d[1])]
+    var opacity = d[2]/maxCount
+    L.circle(latlng, 50, {color: 'green'
+      ,fillColor: '#f03'
+      ,fillOpacity: opacity
+    }).addTo(map)
+  })
+
+  return ;
 }
 
 function func11(){
-  return '...'
+  var first = items[0]
+  var pos = [first.Latitude, first.Longitude]
+
+  var el = $(this).find('.viz')[0]    // lookup the element that will hold the map
+  $(el).height(500) // set the map to the desired height
+  var map = createMap(el, pos, 10)
+
+  _.forEach(items, function(d) {
+    if (_.includes(d.Samples, '1.000000')
+      || _.includes(d.Samples, '3.000000')
+      || _.includes(d.Samples, '4.000000')
+      || _.includes(d.Samples, '8.000000')
+      || _.includes(d.Samples, '10.000000')
+      || _.includes(d.Samples, '30.000000')
+      || _.includes(d.Samples, '32.000000')
+      || _.includes(d.Samples, '33.000000')
+      || _.includes(d.Samples, '37.000000')
+      || _.includes(d.Samples, '45.000000')
+      || _.includes(d.Samples, '53.000000')) {
+
+      var coord = [d.Latitude, d.Longitude]
+      var circle = L.circle(coord, 2, {
+          color: 'green',
+          fillColor: '#f03',
+          fillOpacity: 0.5
+        }).addTo(map);
+    }
+  })
 }
 
 function func12(){
-  return '...'
+  var first = items[0]
+  var pos = [first.Latitude, first.Longitude]
+
+  var el = $(this).find('.viz')[0]    // lookup the element that will hold the map
+  $(el).height(500) // set the map to the desired height
+  var map = createMap(el, pos, 10)
+
+  _.forEach(items, function(d) {
+    if (_.includes(d.Samples, '7.000000')
+      || _.includes(d.Samples, '8.000000')
+      || _.includes(d.Samples, '10.000000')
+      || _.includes(d.Samples, '13.000000')
+      || _.includes(d.Samples, '20.000000')
+      || _.includes(d.Samples, '36.000000')
+      || _.includes(d.Samples, '37.000000')
+      || _.includes(d.Samples, '40.000000')
+      || _.includes(d.Samples, '42.000000')
+      || _.includes(d.Samples, '45.000000')
+      || _.includes(d.Samples, '49.000000')
+      || _.includes(d.Samples, '53.000000')) {
+
+      var coord = [d.Latitude, d.Longitude]
+      var circle = L.circle(coord, 2, {
+          color: 'green',
+          fillColor: '#f03',
+          fillOpacity: 0.5
+        }).addTo(map);
+    }
+  })
 }

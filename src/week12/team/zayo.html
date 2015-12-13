@@ -267,7 +267,6 @@ function func2() {
 }
 
 function func3() {
-  //console.log("func3: ", profileItems)
   var products=_.groupBy(profileItems, function(g){
     return g.Industry
   })
@@ -293,7 +292,6 @@ function func3() {
     return products_count
   })
   var keys=_.keys(map_products)
-  console.log("keys: ", map_products)
   var result=""
 
   var A_count=[]
